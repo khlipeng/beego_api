@@ -5,6 +5,7 @@ import (
 	"github.com/khlipeng/beego_api/controllers"
 )
 
+// 使用注释路由
 func init() {
 
 	beego.Router("/", &controllers.DefaultController{}, "*:GetAll")
