@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"github.com/astaxie/beego/validation"
+	"github.com/khlipeng/beego_api/models"
 	"log"
-	"workerspce/api/models"
 )
 
 type UserController struct {

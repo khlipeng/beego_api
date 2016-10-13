@@ -4,10 +4,10 @@ import (
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/context"
 	"github.com/astaxie/beego/orm"
+	"github.com/khlipeng/beego_api/controllers"
+	"github.com/khlipeng/beego_api/models"
+	_ "github.com/khlipeng/beego_api/routers"
 	"time"
-	"workerspce/api/controllers"
-	"workerspce/api/models"
-	_ "workerspce/api/routers"
 )
 
 func init() {
