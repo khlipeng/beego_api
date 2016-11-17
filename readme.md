@@ -5,7 +5,6 @@
 ## 使用
 
 * get clone github.com/khlipeng/beego_api
-* get clone github.com/dgrijalva/jwt-go
 * bee run
 
 ## 测试路由
