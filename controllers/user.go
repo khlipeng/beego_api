@@ -117,14 +117,14 @@ func (this *UserController) Login() {
 // @Title 认证测试
 // @Description 测试错误码
 // @Success 200 {object}
-// @Failure 404 no enough input
-// @Failure 401 No Admin
+// @Failure 401 unauthorized
 // @router /auth [get]
 func (this *UserController) Auth() {
 	et := utils.EasyToken{}
 	authtoken := strings.TrimSpace(this.Ctx.Request.Header.Get("Authorization"))
 	valido, err := et.ValidateToken(authtoken)
 	if !valido {
+		this.Ctx.ResponseWriter.WriteHeader(401)
 		this.Data["json"] = ErrResponse{-1, fmt.Sprintf("%s", err)}
 		this.ServeJSON()
 		return
