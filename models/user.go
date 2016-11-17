@@ -2,7 +2,7 @@ package models
 
 import (
 	"github.com/astaxie/beego/orm"
-	"log"
+	// "log"
 	// "fmt"
 	"time"
 )
@@ -13,7 +13,7 @@ type User struct {
 	Nickname string    `json:"nickname" orm:"column(nickname);unique;size(40);"`
 	Password string    `json:"-" orm:"column(password);size(40)"`
 	Created  time.Time `json:"create_at" orm:"column(create_at);auto_now_add;type(datetime)"`
-	Updated  time.Time `json:"update_at" orm:"column(update_at);auto_now;type(datetime)"`
+	Updated  time.Time `json:"-" orm:"column(update_at);auto_now;type(datetime)"`
 }
 
 func (u *User) TableName() string {
@@ -25,34 +25,46 @@ func init() {
 func Users() orm.QuerySeter {
 	return orm.NewOrm().QueryTable(new(User))
 }
+
+// 检测手机号是否注册
 func CheckUserPhone(phone string) bool {
 	exist := Users().Filter("phone", phone).Exist()
 	return exist
 }
+
+// 检测用户昵称是否存在
 func CheckUserNickname(nickname string) bool {
 	exist := Users().Filter("nickname", nickname).Exist()
 	return exist
 }
-func CreateUser(user User) User {
 
+//创建用户
+func CreateUser(user User) User {
 	o := orm.NewOrm()
 	o.Insert(&user)
-	// if err != nil {
-	// 	return
-	// }
-
-	log.Println(user)
 	return user
-
 }
+
+//检测手机和昵称是否注册
 func CheckUserPhoneOrNickname(phone string, nickname string) bool {
 	cond := orm.NewCondition()
 	count, _ := Users().SetCond(cond.And("phone", phone).Or("nickname", nickname)).Count()
-	// log.Println(count)
 	if count <= int64(0) {
 		return false
 	}
 	return true
+}
+func CheckUserAuth(nickname string, password string) (User, bool) {
+	o := orm.NewOrm()
+	user := User{
+		Nickname: nickname,
+		Password: password,
+	}
+	err := o.Read(&user, "Nickname", "Password")
+	if err != nil {
+		return user, false
+	}
+	return user, true
 }
 
 // User database CRUD methods include Insert, Read, Update and Delete

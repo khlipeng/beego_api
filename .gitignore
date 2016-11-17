@@ -1,1 +1,3 @@
-beego_api
+/beego_api
+/lastupdate.tmp
+/*.tmp
