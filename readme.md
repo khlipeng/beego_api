@@ -4,7 +4,7 @@
 
 ## 使用
 
-* get clone github.com/khlipeng/beego_api
+* git clone github.com/khlipeng/beego_api
 * bee run
 
 ## 测试路由
